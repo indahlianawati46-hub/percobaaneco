@@ -1,0 +1,64 @@
+// Rate Poin per Kg
+const POIN_RATE = {
+  Plastik: 10,
+  Kertas: 5,
+  Kaleng: 15
+};
+
+// Data lokal awal
+let dataPoin = JSON.parse(localStorage.getItem('ecoPoinData')) || [
+  { nama: 'Budi (X-IPA-1)', poin: 50 },
+  { nama: 'Siti (XI-IPS-2)', poin: 35 }
+];
+
+const form = document.getElementById('ecoForm');
+const leaderboardBody = document.getElementById('leaderboardBody');
+
+// Render tabel leaderboard
+function renderLeaderboard() {
+  // Urutkan berdasarkan poin tertinggi
+  dataPoin.sort((a, b) => b.poin - a.poin);
+
+  leaderboardBody.innerHTML = '';
+  dataPoin.forEach((item, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${item.nama}</td>
+      <td><strong>${item.poin}</strong> Pts</td>
+    `;
+    leaderboardBody.appendChild(row);
+  });
+}
+
+// Handler Submit Form
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const nama = document.getElementById('nama').value.trim();
+  const kategori = document.getElementById('kategori').value;
+  const berat = parseFloat(document.getElementById('berat').value);
+
+  // Hitung poin tambahan
+  const poinTambahan = Math.round(berat * POIN_RATE[kategori]);
+
+  // Cek apakah siswa sudah ada di list
+  const siswaExisting = dataPoin.find(item => item.nama.toLowerCase() === nama.toLowerCase());
+
+  if (siswaExisting) {
+    siswaExisting.poin += poinTambahan;
+  } else {
+    dataPoin.push({ nama: nama, poin: poinTambahan });
+  }
+
+  // Simpan ke LocalStorage browser
+  localStorage.setItem('ecoPoinData', JSON.stringify(dataPoin));
+
+  // Reset Form & Update Tampilan
+  form.reset();
+  renderLeaderboard();
+  alert(`Berhasil menambahkan ${poinTambahan} poin untuk ${nama}!`);
+});
+
+// Jalankan fungsi saat halaman dimuat
+renderLeaderboard();
