@@ -4,105 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EcoPoint Sekolah</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: #f4f9f4;
-      color: #2d4030;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    header h1 {
-      color: #2e7d32;
-      margin-bottom: 5px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      display: grid;
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
-
-    .card h2 {
-      margin-bottom: 15px;
-      color: #1b5e20;
-      border-bottom: 2px solid #e8f5e9;
-      padding-bottom: 8px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-    button {
-      background-color: #2e7d32;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background-color: #1b5e20;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #e0e0e0;
-    }
-
-    th {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
   <header>
     <h1>🌱 EcoPoint Sekolah</h1>
     <p>Sistem Pencatatan Setor Sampah Daur Ulang</p>
@@ -146,71 +50,12 @@
           </tr>
         </thead>
         <tbody id="leaderboardBody">
-          <!-- Data diisi via JavaScript -->
+          <!-- Data diisi oleh Javascript -->
         </tbody>
       </table>
     </section>
   </main>
 
-  <script>
-    // Rate Poin per Kg
-    const POIN_RATE = {
-      Plastik: 10,
-      Kertas: 5,
-      Kaleng: 15
-    };
-
-    // Data awal
-    let dataPoin = JSON.parse(localStorage.getItem('ecoPoinData')) || [
-      { nama: 'Budi (X-IPA-1)', poin: 50 },
-      { nama: 'Siti (XI-IPS-2)', poin: 35 }
-    ];
-
-    const form = document.getElementById('ecoForm');
-    const leaderboardBody = document.getElementById('leaderboardBody');
-
-    // Fungsi menampilkan leaderboard
-    function renderLeaderboard() {
-      dataPoin.sort((a, b) => b.poin - a.poin);
-      leaderboardBody.innerHTML = '';
-      
-      dataPoin.forEach((item, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${item.nama}</td>
-          <td><strong>${item.poin}</strong> Pts</td>
-        `;
-        leaderboardBody.appendChild(row);
-      });
-    }
-
-    // Listener saat form disubmit
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const nama = document.getElementById('nama').value.trim();
-      const kategori = document.getElementById('kategori').value;
-      const berat = parseFloat(document.getElementById('berat').value);
-
-      const poinTambahan = Math.round(berat * POIN_RATE[kategori]);
-      const siswaExisting = dataPoin.find(item => item.nama.toLowerCase() === nama.toLowerCase());
-
-      if (siswaExisting) {
-        siswaExisting.poin += poinTambahan;
-      } else {
-        dataPoin.push({ nama: nama, poin: poinTambahan });
-      }
-
-      localStorage.setItem('ecoPoinData', JSON.stringify(dataPoin));
-      form.reset();
-      renderLeaderboard();
-      alert(`Berhasil menambahkan ${poinTambahan} poin untuk ${nama}!`);
-    });
-
-    // Jalankan awal
-    renderLeaderboard();
-  </script>
-
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
