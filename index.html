@@ -1,18 +1,61 @@
-<h1>Selamat Datang di EcoPoint Sekolah</h1>
-ecopoint-sekolah/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # Optional: jika menggunakan build tools seperti Vite/React
-├── assets/
-│   ├── css/
-│   │   └── style.css           # Tampilan/desain web
-│   ├── js/
-│   │   ├── app.js              # Logika aplikasi (hitung poin, filter data)
-│   │   └── data.js             # Data dummy siswa dan poin daur ulang
-│   └── images/
-│       └── logo.png            # Asset gambar
-├── data/
-│   └── leaderboard.json        # Data statistik setoran sampah
-├── index.html                  # Halaman utama (Dashboard & Leaderboard)
-├── input.html                  # Form pencatatan setoran sampah
-└── README.md                   # Dokumentasi cara pakai & aturan proyek
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoPoint Sekolah</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>🌱 EcoPoint Sekolah</h1>
+    <p>Sistem Pencatatan Setor Sampah Daur Ulang</p>
+  </header>
+
+  <main class="container">
+    <!-- Form Input Setoran -->
+    <section class="card">
+      <h2>Catat Setoran Sampah</h2>
+      <form id="ecoForm">
+        <div class="form-group">
+          <label for="nama">Nama Siswa / NIS</label>
+          <input type="text" id="nama" placeholder="Contoh: Budi (X-IPA-1)" required>
+        </div>
+        <div class="form-group">
+          <label for="kategori">Kategori Sampah</label>
+          <select id="kategori" required>
+            <option value="">-- Pilih Jenis --</option>
+            <option value="Plastik">Botol/Gelas Plastik (10 poin/kg)</option>
+            <option value="Kertas">Kertas/Kardus (5 poin/kg)</option>
+            <option value="Kaleng">Kaleng Aluminium (15 poin/kg)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="berat">Berat (Kg)</label>
+          <input type="number" id="berat" step="0.1" min="0.1" placeholder="0.5" required>
+        </div>
+        <button type="submit">Tambah Setoran</button>
+      </form>
+    </section>
+
+    <!-- Papan Peringkat / Leaderboard -->
+    <section class="card">
+      <h2>🏆 Leaderboard Poin</h2>
+      <table id="leaderboard">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Siswa</th>
+            <th>Total Poin</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Data diisi oleh Javascript -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
